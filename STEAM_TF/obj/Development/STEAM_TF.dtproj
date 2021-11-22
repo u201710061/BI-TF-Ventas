@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">BRYAN-PC</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA5k9/Gpz/w0qpDkbhlHJE4AAAAAACAAAAAAAQZgAAAAEAACAAAACDxYBwKjIvl7MMrfeyKaqQIm5srxf64yEKPHdrDD2MjgAAAAAOgAAAAAIAACAAAACm6SJbvUWBO0AK1s5eOYPhsAi8u6uK3j9M4w1Ooc0PZpAAAAC2/CBIpXQRT3UW4/MFqPU11TOZRMKx7bc+aRKkU59kLgB8GSUymM3Ix0ygwn6OXrL+3KdlanLZD/RnN3zJAnAiFeVCK5MrBjztmSisbc+Tp9aTEupCIbEwKL0/fWtfo1FRJYFaRJ5Mg0GKbD/SqmW++7IWxNKfKJWOuIVunYhnUWc7t0pszb5410I6PGPPBdBAAAAAysohfAF9vNN5Kuyr5sBwV3zBGTJ/G0seiXPA4t2pExBbrNB9Xe76h3Wdxcn5nRJnzYIyJYCXFSjEtNye1lDrjA==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA5k9/Gpz/w0qpDkbhlHJE4AAAAAACAAAAAAAQZgAAAAEAACAAAABq+9rj5p4UaGmro6YyE+GVP83J0gj7BHNtP42T91UutAAAAAAOgAAAAAIAACAAAAD4zIBd3iAGdJc5BUS0CqqxOekm/3S5zanfQd6wNLXXd5AAAABKxQX5XfxIWbertA4YWPup9YEAxzxoFTst9O78iTNJLfNx22kmY6B6xVfJhqGoqU4a2r8JJfLCGMRr1UdoVTACIeY6DnteAYNplxWpMJd2iEhWRLbOzfT6RpfE7JstFmR6sC6J7f9N5pg1mChEc8CN46Dsmwy7KZbQAMkeMyYr6q+JNfqEg+oOZFPRhT7wFnBAAAAA4nEzmRfNfSdN5+W9LVrpKr4dFEb37KLCFU31aMDvdtiAe76JR4u0IQUrcEPewjxBzQQtHmLwsf2iauO30qFAIg==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -739,10 +739,10 @@
                 <SSIS:Property SSIS:Name="Name">Package1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">72</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">74</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{5C1698EE-BD12-476C-A00E-EDAA2AF2E925}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{332B71E0-6301-46F8-B6BD-7C73B3248B65}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -954,10 +954,10 @@
                 <SSIS:Property SSIS:Name="Name">ETL_RESEÑAS_OLTP_STAGE</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">26</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">28</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{188B89B4-37FF-42ED-85D3-1C77297D08EA}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{1724A51B-E953-489A-9571-4336FB1822A0}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
