@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="42"
-  DTS:VersionGUID="{7B6F426B-E6A8-43B9-B1D8-6FA7D66AA21B}">
+  DTS:VersionBuild="55"
+  DTS:VersionGUID="{BBAB00B0-6FF5-44A5-8F2B-A2924AD514CA}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -61,7 +61,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{331206D8-5E61-48D4-B031-806439F8FC83}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE DIM_Genero&#xA;TRUNCATE TABLE DIM_Desarrollador&#xA;TRUNCATE TABLE DIM_Distribuidor&#xA;TRUNCATE TABLE DIM_Videojuego&#xA;TRUNCATE TABLE DIM_Tiempo&#xA;TRUNCATE TABLE FACT_Venta&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="TRUNCATE TABLE FACT_Venta&#xA;DELETE FROM DIM_Genero;&#xA;DBCC CHECKIDENT ('DIM_Genero', RESEED, 0)&#xA;DELETE FROM DIM_Distribuidor;&#xA;DBCC CHECKIDENT ('DIM_Distribuidor', RESEED, 0)&#xA;DELETE FROM DIM_Videojuego;&#xA;DBCC CHECKIDENT ('DIM_Videojuego', RESEED, 0)&#xA;DELETE FROM DIM_Tiempo;&#xA;DELETE FROM DIM_Desarrollador;&#xA;DBCC CHECKIDENT ('DIM_Desarrollador', RESEED, 0)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -160,9 +160,8 @@ where [refTable].[Nombre] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Flujo de datos\Búsqueda SK_Desarrollador.Inputs[Entrada de búsqueda].Columns[developer]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
-                      cachedLength="50"
+                      cachedDataType="wstr"
+                      cachedLength="60"
                       cachedName="developer"
                       lineageId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]">
                       <properties>
@@ -320,9 +319,8 @@ where [refTable].[Nombre] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Flujo de datos\Búsqueda SK_Distribuidor.Inputs[Entrada de búsqueda].Columns[publisher]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
-                      cachedLength="50"
+                      cachedDataType="wstr"
+                      cachedLength="60"
                       cachedName="publisher"
                       lineageId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]">
                       <properties>
@@ -480,8 +478,7 @@ where [refTable].[Nombre] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Flujo de datos\Búsqueda SK_Genero.Inputs[Entrada de búsqueda].Columns[Genre]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
+                      cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="Genre"
                       lineageId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[Genre]">
@@ -798,8 +795,7 @@ where [refTable].[Titulo] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Flujo de datos\Búsqueda SK_Videojuego.Inputs[Entrada de búsqueda].Columns[name]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
+                      cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="name"
                       lineageId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[name]">
@@ -996,6 +992,12 @@ where [refTable].[Titulo] = ?</property>
                       cachedName="discount"
                       externalMetadataColumnId="Package\Tarea Flujo de datos\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Descuento]"
                       lineageId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[discount]" />
+                    <inputColumn
+                      refId="Package\Tarea Flujo de datos\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[quantity]"
+                      cachedDataType="i4"
+                      cachedName="quantity"
+                      externalMetadataColumnId="Package\Tarea Flujo de datos\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Cantidad]"
+                      lineageId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[quantity]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1037,6 +1039,10 @@ where [refTable].[Titulo] = ?</property>
                       name="Descuento"
                       precision="4"
                       scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Tarea Flujo de datos\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Cantidad]"
+                      dataType="i4"
+                      name="Cantidad" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1098,8 +1104,7 @@ where [refTable].[Titulo] = ?</property>
                   <outputColumns>
                     <outputColumn
                       refId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
@@ -1140,12 +1145,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
                       name="developer"
                       truncationRowDisposition="FailComponent">
@@ -1162,12 +1166,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
                       name="publisher"
                       truncationRowDisposition="FailComponent">
@@ -1264,8 +1267,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
@@ -1289,8 +1291,7 @@ where [refTable].[Titulo] = ?</property>
                     isUsed="True">
                     <externalMetadataColumn
                       refId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="name" />
                     <externalMetadataColumn
@@ -1299,15 +1300,13 @@ where [refTable].[Titulo] = ?</property>
                       name="date" />
                     <externalMetadataColumn
                       refId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="developer" />
                     <externalMetadataColumn
                       refId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="publisher" />
                     <externalMetadataColumn
                       refId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[base_price]"
@@ -1327,8 +1326,7 @@ where [refTable].[Titulo] = ?</property>
                       name="quantity" />
                     <externalMetadataColumn
                       refId="Package\Tarea Flujo de datos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="Genre" />
                   </externalMetadataColumns>
@@ -1450,9 +1448,8 @@ where [refTable].[Titulo] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Agregado.Inputs[Entrada de agregado 1].Columns[developer]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
-                      cachedLength="50"
+                      cachedDataType="wstr"
+                      cachedLength="60"
                       cachedName="developer"
                       lineageId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]" />
                   </inputColumns>
@@ -1477,9 +1474,8 @@ where [refTable].[Titulo] = ?</property>
                   <outputColumns>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Agregado.Outputs[Salida de agregado 1].Columns[developer]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Desarrollador\Agregado.Outputs[Salida de agregado 1].Columns[developer]"
                       name="developer">
                       <properties>
@@ -1582,9 +1578,8 @@ where [refTable].[Titulo] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[developer]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
-                      cachedLength="50"
+                      cachedDataType="wstr"
+                      cachedLength="60"
                       cachedName="developer"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Desarrollador\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Nombre]"
                       lineageId="Package\Tarea Poblar Tabla Desarrollador\Agregado.Outputs[Salida de agregado 1].Columns[developer]" />
@@ -1593,8 +1588,7 @@ where [refTable].[Titulo] = ?</property>
                     isUsed="True">
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Nombre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="60"
                       name="Nombre" />
                     <externalMetadataColumn
@@ -1662,8 +1656,7 @@ where [refTable].[Titulo] = ?</property>
                   <outputColumns>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
@@ -1684,7 +1677,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[date]"
-                      dataType="date"
+                      dataType="dbDate"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[date]"
@@ -1704,12 +1697,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
                       name="developer"
                       truncationRowDisposition="FailComponent">
@@ -1726,12 +1718,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
                       name="publisher"
                       truncationRowDisposition="FailComponent">
@@ -1828,8 +1819,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
@@ -1853,25 +1843,22 @@ where [refTable].[Titulo] = ?</property>
                     isUsed="True">
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="name" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[date]"
-                      dataType="date"
+                      dataType="dbDate"
                       name="date" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="developer" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="publisher" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[base_price]"
@@ -1891,8 +1878,7 @@ where [refTable].[Titulo] = ?</property>
                       name="quantity" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Desarrollador\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="Genre" />
                   </externalMetadataColumns>
@@ -1994,9 +1980,8 @@ where [refTable].[Titulo] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Agregado.Inputs[Entrada de agregado 1].Columns[publisher]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
-                      cachedLength="50"
+                      cachedDataType="wstr"
+                      cachedLength="60"
                       cachedName="publisher"
                       lineageId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]" />
                   </inputColumns>
@@ -2021,9 +2006,8 @@ where [refTable].[Titulo] = ?</property>
                   <outputColumns>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Agregado.Outputs[Salida de agregado 1].Columns[publisher]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Distribuidor\Agregado.Outputs[Salida de agregado 1].Columns[publisher]"
                       name="publisher">
                       <properties>
@@ -2126,9 +2110,8 @@ where [refTable].[Titulo] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[publisher]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
-                      cachedLength="50"
+                      cachedDataType="wstr"
+                      cachedLength="60"
                       cachedName="publisher"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Distribuidor\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Nombre]"
                       lineageId="Package\Tarea Poblar Tabla Distribuidor\Agregado.Outputs[Salida de agregado 1].Columns[publisher]" />
@@ -2137,8 +2120,7 @@ where [refTable].[Titulo] = ?</property>
                     isUsed="True">
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Nombre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="60"
                       name="Nombre" />
                     <externalMetadataColumn
@@ -2206,8 +2188,7 @@ where [refTable].[Titulo] = ?</property>
                   <outputColumns>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
@@ -2228,7 +2209,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[date]"
-                      dataType="date"
+                      dataType="dbDate"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[date]"
@@ -2248,12 +2229,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
                       name="developer"
                       truncationRowDisposition="FailComponent">
@@ -2270,12 +2250,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
                       name="publisher"
                       truncationRowDisposition="FailComponent">
@@ -2372,8 +2351,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
@@ -2397,25 +2375,22 @@ where [refTable].[Titulo] = ?</property>
                     isUsed="True">
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="name" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[date]"
-                      dataType="date"
+                      dataType="dbDate"
                       name="date" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="developer" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="publisher" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[base_price]"
@@ -2435,8 +2410,7 @@ where [refTable].[Titulo] = ?</property>
                       name="quantity" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Distribuidor\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="Genre" />
                   </externalMetadataColumns>
@@ -2795,7 +2769,7 @@ where [refTable].[Titulo] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Columna derivada.Inputs[Entrada de columna derivada].Columns[date]"
-                      cachedDataType="date"
+                      cachedDataType="dbDate"
                       cachedName="date"
                       lineageId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[date]" />
                   </inputColumns>
@@ -3201,8 +3175,7 @@ where [refTable].[Titulo] = ?</property>
                   <outputColumns>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
@@ -3223,7 +3196,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[date]"
-                      dataType="date"
+                      dataType="dbDate"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[date]"
@@ -3243,12 +3216,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
                       name="developer"
                       truncationRowDisposition="FailComponent">
@@ -3265,12 +3237,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
                       name="publisher"
                       truncationRowDisposition="FailComponent">
@@ -3367,8 +3338,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
@@ -3392,25 +3362,22 @@ where [refTable].[Titulo] = ?</property>
                     isUsed="True">
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="name" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[date]"
-                      dataType="date"
+                      dataType="dbDate"
                       name="date" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="developer" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="publisher" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[base_price]"
@@ -3430,8 +3397,7 @@ where [refTable].[Titulo] = ?</property>
                       name="quantity" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Fechas\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="Genre" />
                   </externalMetadataColumns>
@@ -3538,8 +3504,7 @@ where [refTable].[Titulo] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Poblar Tabla Género\Agregado.Inputs[Entrada de agregado 1].Columns[Genre]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
+                      cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="Genre"
                       lineageId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[Genre]" />
@@ -3565,8 +3530,7 @@ where [refTable].[Titulo] = ?</property>
                   <outputColumns>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Género\Agregado.Outputs[Salida de agregado 1].Columns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       lineageId="Package\Tarea Poblar Tabla Género\Agregado.Outputs[Salida de agregado 1].Columns[Genre]"
                       name="Genre">
@@ -3642,7 +3606,7 @@ where [refTable].[Titulo] = ?</property>
                 <property
                   dataType="System.Boolean"
                   description="Indica si las columnas que contienen NULL tendrán NULL insertado en el destino. Si es False, las columnas que contienen NULL tendrán sus valores predeterminados insertados en el destino. Solo se aplica si está activada la carga rápida."
-                  name="FastLoadKeepNulls">false</property>
+                  name="FastLoadKeepNulls">true</property>
                 <property
                   dataType="System.String"
                   description="Especifica opciones para usar con la carga rápida. Solo se aplica si está activada la carga rápida."
@@ -3670,8 +3634,7 @@ where [refTable].[Titulo] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Poblar Tabla Género\Destino DIM_Genero.Inputs[Entrada de destino de OLE DB].Columns[Genre]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
+                      cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="Genre"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Género\Destino DIM_Genero.Inputs[Entrada de destino de OLE DB].ExternalColumns[Nombre]"
@@ -3685,8 +3648,7 @@ where [refTable].[Titulo] = ?</property>
                       name="Sk_Genero" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Género\Destino DIM_Genero.Inputs[Entrada de destino de OLE DB].ExternalColumns[Nombre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="Nombre" />
                   </externalMetadataColumns>
@@ -3750,8 +3712,7 @@ where [refTable].[Titulo] = ?</property>
                   <outputColumns>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
@@ -3772,7 +3733,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[date]"
-                      dataType="date"
+                      dataType="dbDate"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[date]"
@@ -3792,12 +3753,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
                       name="developer"
                       truncationRowDisposition="FailComponent">
@@ -3814,12 +3774,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
                       name="publisher"
                       truncationRowDisposition="FailComponent">
@@ -3916,8 +3875,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
@@ -3941,25 +3899,22 @@ where [refTable].[Titulo] = ?</property>
                     isUsed="True">
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="name" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[date]"
-                      dataType="date"
+                      dataType="dbDate"
                       name="date" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="developer" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="publisher" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[base_price]"
@@ -3979,8 +3934,7 @@ where [refTable].[Titulo] = ?</property>
                       name="quantity" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Género\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="Genre" />
                   </externalMetadataColumns>
@@ -4082,8 +4036,7 @@ where [refTable].[Titulo] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Agregado.Inputs[Entrada de agregado 1].Columns[name]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
+                      cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="name"
                       lineageId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[name]" />
@@ -4109,8 +4062,7 @@ where [refTable].[Titulo] = ?</property>
                   <outputColumns>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Agregado.Outputs[Salida de agregado 1].Columns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       lineageId="Package\Tarea Poblar Tabla Videojuegos\Agregado.Outputs[Salida de agregado 1].Columns[name]"
                       name="name">
@@ -4214,8 +4166,7 @@ where [refTable].[Titulo] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[name]"
-                      cachedCodepage="65001"
-                      cachedDataType="str"
+                      cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="name"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Videojuegos\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Titulo]"
@@ -4229,8 +4180,7 @@ where [refTable].[Titulo] = ?</property>
                       name="Sk_Videojuego" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Titulo]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="100"
                       name="Titulo" />
                   </externalMetadataColumns>
@@ -4294,8 +4244,7 @@ where [refTable].[Titulo] = ?</property>
                   <outputColumns>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
@@ -4316,7 +4265,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[date]"
-                      dataType="date"
+                      dataType="dbDate"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[date]"
@@ -4336,12 +4285,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[developer]"
                       name="developer"
                       truncationRowDisposition="FailComponent">
@@ -4358,12 +4306,11 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      length="50"
+                      length="60"
                       lineageId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[publisher]"
                       name="publisher"
                       truncationRowDisposition="FailComponent">
@@ -4460,8 +4407,7 @@ where [refTable].[Titulo] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].Columns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
@@ -4485,25 +4431,22 @@ where [refTable].[Titulo] = ?</property>
                     isUsed="True">
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[name]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="name" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[date]"
-                      dataType="date"
+                      dataType="dbDate"
                       name="date" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[developer]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="developer" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[publisher]"
-                      codePage="65001"
-                      dataType="str"
-                      length="50"
+                      dataType="wstr"
+                      length="60"
                       name="publisher" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[base_price]"
@@ -4523,8 +4466,7 @@ where [refTable].[Titulo] = ?</property>
                       name="quantity" />
                     <externalMetadataColumn
                       refId="Package\Tarea Poblar Tabla Videojuegos\Origen de archivo plano.Outputs[Salida de origen de archivo plano].ExternalColumns[Genre]"
-                      codePage="65001"
-                      dataType="str"
+                      dataType="wstr"
                       length="50"
                       name="Genre" />
                   </externalMetadataColumns>
@@ -4696,7 +4638,7 @@ where [refTable].[Titulo] = ?</property>
         <NodeLayout
           Size="176,42"
           Id="Package\Tarea Poblar Tabla Videojuegos"
-          TopLeft="875,328" />
+          TopLeft="874,328" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción]"
           TopLeft="654,156">
@@ -4771,9 +4713,9 @@ where [refTable].[Titulo] = ?</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="228,172"
+              EndConnector="227,172"
               Start="0,0"
-              End="228,164.5">
+              End="227,164.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -4784,13 +4726,13 @@ where [refTable].[Titulo] = ?</property>
                     Point2="0,69.7622377622378"
                     Point3="4,69.7622377622378" />
                   <mssgle:LineSegment
-                    End="224,69.7622377622378" />
+                    End="223,69.7622377622378" />
                   <mssgle:CubicBezierSegment
-                    Point1="224,69.7622377622378"
-                    Point2="228,69.7622377622378"
-                    Point3="228,73.7622377622378" />
+                    Point1="223,69.7622377622378"
+                    Point2="227,69.7622377622378"
+                    Point3="227,73.7622377622378" />
                   <mssgle:LineSegment
-                    End="228,164.5" />
+                    End="227,164.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4971,13 +4913,13 @@ where [refTable].[Titulo] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 8]"
-          TopLeft="963,370">
+          TopLeft="962,370">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-206,152"
+              EndConnector="-205,152"
               Start="0,0"
-              End="-206,144.5">
+              End="-205,144.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -4988,13 +4930,13 @@ where [refTable].[Titulo] = ?</property>
                     Point2="0,90.3783783783784"
                     Point3="-4,90.3783783783784" />
                   <mssgle:LineSegment
-                    End="-202,90.3783783783784" />
+                    End="-201,90.3783783783784" />
                   <mssgle:CubicBezierSegment
-                    Point1="-202,90.3783783783784"
-                    Point2="-206,90.3783783783784"
-                    Point3="-206,94.3783783783784" />
+                    Point1="-201,90.3783783783784"
+                    Point2="-205,90.3783783783784"
+                    Point3="-205,94.3783783783784" />
                   <mssgle:LineSegment
-                    End="-206,144.5" />
+                    End="-205,144.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5046,31 +4988,59 @@ where [refTable].[Titulo] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="134,45"
+          Id="Package\Tarea Flujo de datos\Búsqueda SK_Distribuidor"
+          TopLeft="893,227" />
+        <NodeLayout
+          Size="181,42"
+          Id="Package\Tarea Flujo de datos\Búsqueda SK_Tiempo"
+          TopLeft="277,384" />
+        <NodeLayout
           Size="168,42"
           Id="Package\Tarea Flujo de datos\Destino de OLE DB"
-          TopLeft="512,511" />
+          TopLeft="605,383" />
         <NodeLayout
           Size="191,42"
           Id="Package\Tarea Flujo de datos\Origen de archivo plano"
           TopLeft="545,34" />
         <NodeLayout
+          Size="134,52"
+          Id="Package\Tarea Flujo de datos\Búsqueda SK_Desarrollador"
+          TopLeft="581,222" />
+        <NodeLayout
+          Size="134,42"
+          Id="Package\Tarea Flujo de datos\Búsqueda SK_Genero"
+          TopLeft="304,229" />
+        <NodeLayout
           Size="125,42"
           Id="Package\Tarea Flujo de datos\Búsqueda SK_Videojuego"
-          TopLeft="577,138" />
+          TopLeft="893,119" />
         <EdgeLayout
           Id="Package\Tarea Flujo de datos.Paths[Salida de origen de archivo plano]"
-          TopLeft="640,76">
+          TopLeft="640.5,76">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,62"
+              EndConnector="315,43"
               Start="0,0"
-              End="0,54.5">
+              End="315,35.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,54.5" />
+                    End="0,17.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.5"
+                    Point2="0,21.5"
+                    Point3="4,21.5" />
+                  <mssgle:LineSegment
+                    End="311,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="311,21.5"
+                    Point2="315,21.5"
+                    Point3="315,25.5" />
+                  <mssgle:LineSegment
+                    End="315,35.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5079,193 +5049,175 @@ where [refTable].[Titulo] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="134,42"
-          Id="Package\Tarea Flujo de datos\Búsqueda SK_Distribuidor"
-          TopLeft="582,234" />
-        <NodeLayout
-          Size="134,42"
-          Id="Package\Tarea Flujo de datos\Búsqueda SK_Desarrollador"
-          TopLeft="587,317" />
-        <NodeLayout
-          Size="134,42"
-          Id="Package\Tarea Flujo de datos\Búsqueda SK_Genero"
-          TopLeft="574,408" />
         <EdgeLayout
-          Id="Package\Tarea Flujo de datos.Paths[Salida de entradas coincidentes de búsqueda]"
-          TopLeft="639.5,180">
+          Id="Package\Tarea Flujo de datos.Paths[Salida de entradas coincidentes de búsqueda4]"
+          TopLeft="458,404.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="9.5,54"
+              EndConnector="147,0"
               Start="0,0"
-              End="9.5,46.5">
+              End="139.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,23" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,23"
-                    Point2="0,27"
-                    Point3="4,27" />
-                  <mssgle:LineSegment
-                    End="5.5,27" />
-                  <mssgle:CubicBezierSegment
-                    Point1="5.5,27"
-                    Point2="9.5,27"
-                    Point3="9.5,31" />
-                  <mssgle:LineSegment
-                    End="9.5,46.5" />
+                    End="139.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-95.0690234375,32,199.638046875,12.1953125"
+              BoundingBox="-30.0690234375,5,199.638046875,12.1953125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Tarea Flujo de datos.Paths[Salida de entradas coincidentes de búsqueda1]"
-          TopLeft="651.5,276">
+          Id="Package\Tarea Flujo de datos.Paths[Salida de entradas coincidentes de búsqueda3]"
+          TopLeft="369.25,271">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,41"
+              EndConnector="0,113"
               Start="0,0"
-              End="0,33.5">
+              End="0,105.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,33.5" />
+                    End="0,105.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-99.8190234375,10.65234375,199.638046875,12.1953125"
+              BoundingBox="-99.8190234375,46.65234375,199.638046875,12.1953125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Tarea Flujo de datos.Paths[Salida de entradas coincidentes de búsqueda2]"
-          TopLeft="654,359">
+          TopLeft="581,249">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-13,49"
+              EndConnector="-143,0"
               Start="0,0"
-              End="-13,41.5">
+              End="-135.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,20.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.5"
-                    Point2="0,24.5"
-                    Point3="-4,24.5" />
-                  <mssgle:LineSegment
-                    End="-9,24.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-9,24.5"
-                    Point2="-13,24.5"
-                    Point3="-13,28.5" />
-                  <mssgle:LineSegment
-                    End="-13,41.5" />
+                    End="-135.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-106.3190234375,29.5,199.638046875,12.1953125"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="181,42"
-          Id="Package\Tarea Flujo de datos\Búsqueda SK_Tiempo"
-          TopLeft="352,435" />
-        <EdgeLayout
-          Id="Package\Tarea Flujo de datos.Paths[Salida de entradas coincidentes de búsqueda3]"
-          TopLeft="574,429">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-88,27"
-              Start="0,0"
-              End="-80.5,27">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-40,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-40,0"
-                    Point2="-44,0"
-                    Point3="-44,4" />
-                  <mssgle:LineSegment
-                    End="-44,23" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-44,23"
-                    Point2="-44,27"
-                    Point3="-48,27" />
-                  <mssgle:LineSegment
-                    End="-80.5,27" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-143.8190234375,-18.1953125,199.638046875,12.1953125"
+              BoundingBox="-167.5690234375,5,199.638046875,12.1953125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Tarea Flujo de datos.Paths[Salida de entradas coincidentes de búsqueda4]"
-          TopLeft="419,477">
+          Id="Package\Tarea Flujo de datos.Paths[Salida de entradas coincidentes de búsqueda1]"
+          TopLeft="893,248.75">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="177,34"
+              EndConnector="-178,0"
               Start="0,0"
-              End="177,26.5">
+              End="-170.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,13" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,13"
-                    Point2="0,17"
-                    Point3="4,17" />
-                  <mssgle:LineSegment
-                    End="173,17" />
-                  <mssgle:CubicBezierSegment
-                    Point1="173,17"
-                    Point2="177,17"
-                    Point3="177,21" />
-                  <mssgle:LineSegment
-                    End="177,26.5" />
+                    End="-170.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-11.3190234375,22,199.638046875,12.1953125"
+              BoundingBox="-185.0690234375,5,199.638046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Tarea Flujo de datos.Paths[Salida de entradas coincidentes de búsqueda]"
+          TopLeft="957.75,161">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,66"
+              Start="0,0"
+              End="0,58.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-99.8190234375,23.15234375,199.638046875,12.1953125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tarea Flujo de datos\Búsqueda SK_Distribuidor">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DIM_Distribuidor]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tarea Flujo de datos\Búsqueda SK_Tiempo">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DIM_Tiempo]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Tarea Flujo de datos\Destino de OLE DB">
     <Properties>
@@ -5276,6 +5228,52 @@ where [refTable].[Titulo] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tarea Flujo de datos\Búsqueda SK_Desarrollador">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DIM_Desarrollador]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Tarea Flujo de datos\Búsqueda SK_Genero">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DIM_Genero]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -5306,7 +5304,7 @@ where [refTable].[Titulo] = ?</property>
     design-time-name="Package\Tarea Poblar Tabla Desarrollador">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="168,42"
           Id="Package\Tarea Poblar Tabla Desarrollador\Destino de OLE DB"
@@ -5338,9 +5336,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5362,9 +5358,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -5387,7 +5381,7 @@ where [refTable].[Titulo] = ?</property>
     design-time-name="Package\Tarea Poblar Tabla Distribuidor">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="168,42"
           Id="Package\Tarea Poblar Tabla Distribuidor\Destino de OLE DB"
@@ -5419,9 +5413,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5443,9 +5435,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -5468,7 +5458,7 @@ where [refTable].[Titulo] = ?</property>
     design-time-name="Package\Tarea Poblar Tabla Fechas">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="164,42"
           Id="Package\Tarea Poblar Tabla Fechas\Columna derivada"
@@ -5504,9 +5494,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5528,9 +5516,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5552,9 +5538,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -5577,7 +5561,7 @@ where [refTable].[Titulo] = ?</property>
     design-time-name="Package\Tarea Poblar Tabla Género">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="168,42"
           Id="Package\Tarea Poblar Tabla Género\Destino DIM_Genero"
@@ -5609,9 +5593,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5633,9 +5615,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -5658,7 +5638,7 @@ where [refTable].[Titulo] = ?</property>
     design-time-name="Package\Tarea Poblar Tabla Videojuegos">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="168,42"
           Id="Package\Tarea Poblar Tabla Videojuegos\Destino de OLE DB"
@@ -5690,9 +5670,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5714,9 +5692,7 @@ where [refTable].[Titulo] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -5732,98 +5708,6 @@ where [refTable].[Titulo] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Tarea Flujo de datos\Búsqueda SK_Distribuidor">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[DIM_Distribuidor]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Tarea Flujo de datos\Búsqueda SK_Desarrollador">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[DIM_Desarrollador]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Tarea Flujo de datos\Búsqueda SK_Genero">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[DIM_Genero]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Tarea Flujo de datos\Búsqueda SK_Tiempo">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[DIM_Tiempo]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
